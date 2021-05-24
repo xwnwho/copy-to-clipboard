@@ -19,8 +19,8 @@
   "keywords": [
     "clipboard"
   ],
-  "author": "",
-  "license": "ISC",
+  "author": "xwnwho",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/xwnwho/copy-to-clipboard/issues"
   },

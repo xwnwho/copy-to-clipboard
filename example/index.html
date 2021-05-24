@@ -12,7 +12,10 @@
   <script>
     var dom = document.getElementById('btn')
     dom.addEventListener('click', function() {
-      copy('fdsklaffds')
+      // 编译一个umd版本测试
+      copy('fdsklaffds').then((res) => {
+        console.log(res)
+      })
     })
   </script>
 </body>

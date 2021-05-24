@@ -7,7 +7,6 @@ export default {
   output: {
     file: pkg.main,
     format: "esm",
-    name: "copy",
   },
   plugins: [
     nodeResolve(),

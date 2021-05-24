@@ -1,4 +1,4 @@
-# copy-to-clipboard2
+# copy-to-clipboard3
 
 > 配置和代码基本和[copy-to-clipboard](https://www.npmjs.com/package/copy-to-clipboard)一致，解决document.execCommand('copy')引起的页面卡顿和延迟
 
@@ -33,7 +33,7 @@ copy('Text', {
 ```js
 module.exports = {
   transpileDependencies: [
-    'copy-to-clipboard',
+    'copy-to-clipboard3',
   ]
 }
 ```
@@ -48,8 +48,7 @@ module.exports = {
 +       include: [
 +         resolve('src'),
 +         resolve('test'),
-+         resolve('node_modules/axios-package2'),
-+         resolve('node_modules/query-string')
++         resolve('node_modules/copy-to-clipboard3'),
 +       ]
       }
 ```

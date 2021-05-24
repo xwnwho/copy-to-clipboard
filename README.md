@@ -1,6 +1,7 @@
 # copy-to-clipboard2
 
 > 配置和代码基本和[copy-to-clipboard](https://www.npmjs.com/package/copy-to-clipboard)一致，解决document.execCommand('copy')引起的页面卡顿和延迟
+
 > 复制后不会恢复页面原来的高亮
 
 ## 使用

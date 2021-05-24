@@ -4,9 +4,15 @@
 
 > 复制后不会恢复页面原来的高亮
 
+## 安装
+
+```bash
+npm i copy-to-clipboard3
+```
+
 ## 使用
 ```ts
-import copy from 'copy-to-clipboard2';
+import copy from 'copy-to-clipboard3';
  
 copy('Text');
  

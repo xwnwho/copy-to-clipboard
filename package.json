@@ -1,7 +1,7 @@
 {
   "name": "copy-to-clipboard",
   "version": "0.1.0",
-  "description": "",
+  "description": "clipboard",
   "main": "dist/index.js",
   "typings": "types/index.d.ts",
   "files": [
@@ -16,7 +16,9 @@
     "type": "git",
     "url": "git+https://github.com/xwnwho/copy-to-clipboard.git"
   },
-  "keywords": [],
+  "keywords": [
+    "clipboard"
+  ],
   "author": "",
   "license": "ISC",
   "bugs": {

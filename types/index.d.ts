@@ -1,7 +1,6 @@
 declare const clipboardToIE11Formatting: {
-    "text/plain": string;
-    "text/html": string;
-    default: string;
+    'text/plain': string;
+    'text/html': string;
 };
 interface Options {
     debug?: boolean;

@@ -1,9 +1,8 @@
 const navigatorClipboard = window.navigator.clipboard
-const cssText = "position:fixed;pointer-events:none;z-index:-9999;opacity:0;"
+const cssText = 'position:fixed;pointer-events:none;z-index:-9999;opacity:0;'
 const clipboardToIE11Formatting = {
-  "text/plain": "Text",
-  "text/html": "Url",
-  default: "Text",
+  'text/plain': 'Text',
+  'text/html': 'Url',
 }
 interface Options {
   debug?: boolean
@@ -13,7 +12,7 @@ const copy = (
   text: string,
   options: Options = {}
 ): Promise<boolean | Error> => {
-  const { debug, format = "default" } = options
+  const { debug, format = 'text/plain' } = options
   return new Promise((resolve, reject) => {
     if (navigatorClipboard) {
       // 最新浏览器api
@@ -27,14 +26,38 @@ const copy = (
       }
     } else {
       try {
+        const copyHander = (e: ClipboardEvent) => {
+          e.stopPropagation()
+          if (format) {
+            e.preventDefault()
+            if (typeof e.clipboardData === 'undefined') {
+              // IE 11
+              debug && console.warn('unable to use e.clipboardData')
+              debug && console.warn('trying IE specific stuff')
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              ;(window as any).clipboardData.clearData()
+              const formatting =
+                clipboardToIE11Formatting[format] ||
+                clipboardToIE11Formatting['text/plain']
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              ;(window as any).clipboardData.setData(formatting, text)
+            } else {
+              // all other browsers
+              e.clipboardData?.clearData()
+              e.clipboardData?.setData(format, text)
+            }
+          }
+        }
         // 老版本api
-        const textarea = document.createElement("textarea")
+        const textarea = document.createElement('textarea')
         // 防止卡顿
         textarea.value = text.substr(0, 1)
-        textarea.setAttribute("readonly", "")
+        textarea.setAttribute('readonly', '')
         textarea.style.cssText = cssText
+        document.body.appendChild(textarea)
+        textarea.addEventListener('copy', copyHander)
         if (navigator.userAgent.match(/ipad|ipod|iphone/i)) {
-          textarea.contentEditable = "true"
+          textarea.contentEditable = 'true'
           textarea.readOnly = true
           const range = document.createRange()
           range.selectNodeContents(textarea)
@@ -45,33 +68,13 @@ const copy = (
         } else {
           textarea.select()
         }
-        textarea.addEventListener("copy", function (e) {
-          e.stopPropagation()
-          if (format) {
-            e.preventDefault()
-            if (typeof e.clipboardData === "undefined") {
-              // IE 11
-              debug && console.warn("unable to use e.clipboardData")
-              debug && console.warn("trying IE specific stuff")
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              ;(window as any).clipboardData.clearData()
-              const formatting =
-                clipboardToIE11Formatting[format] ||
-                clipboardToIE11Formatting["default"]
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              ;(window as any).clipboardData.setData(formatting, text)
-            } else {
-              // all other browsers
-              e.clipboardData?.clearData()
-              e.clipboardData?.setData(format, text)
-            }
-          }
-        })
         // 该接口数据量大容易卡顿
-        const success = document.execCommand("copy")
+        const success = document.execCommand('copy')
+        textarea.removeEventListener('copy', copyHander)
+        document.body.appendChild(textarea)
         success ? resolve(true) : reject(false)
       } catch (error) {
-        debug && console.warn("error")
+        debug && console.warn('error')
         reject(error)
       }
     }
